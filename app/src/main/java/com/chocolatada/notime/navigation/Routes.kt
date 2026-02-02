@@ -1,4 +1,6 @@
 package com.chocolatada.notime.navigation
 
-class RouteEntry {
-}
+import androidx.navigation3.runtime.NavKey
+
+data object NotificationList: NavKey
+data object CreateNotification: NavKey
