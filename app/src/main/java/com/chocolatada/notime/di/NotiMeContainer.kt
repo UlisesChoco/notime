@@ -5,6 +5,12 @@ import androidx.room.Room
 import com.chocolatada.notime.create_notification.data.dao.CreateNotificationDao
 import com.chocolatada.notime.create_notification.data.repository.CreateNotificationRepositoryImpl
 import com.chocolatada.notime.create_notification.domain.ICreateNotificationRepository
+import com.chocolatada.notime.notification_detail.data.dao.NotificationDetailDao
+import com.chocolatada.notime.notification_detail.data.repository.NotificationDetailRepositoryImpl
+import com.chocolatada.notime.notification_detail.domain.INotificationDetailRepository
+import com.chocolatada.notime.notification_list.data.dao.NotificationListDao
+import com.chocolatada.notime.notification_list.data.repository.NotificationListRepositoryImpl
+import com.chocolatada.notime.notification_list.domain.INotificationListRepository
 import com.chocolatada.notime.room.NotiMeDatabase
 
 class NotiMeContainer: Application() {
@@ -12,6 +18,8 @@ class NotiMeContainer: Application() {
 
     companion object {
         lateinit var createNotificationRepository: ICreateNotificationRepository
+        lateinit var notificationListRepository: INotificationListRepository
+        lateinit var notificationDetailRepository: INotificationDetailRepository
     }
 
     override fun onCreate() {
@@ -25,7 +33,11 @@ class NotiMeContainer: Application() {
 
         val notificationDao = database.getNotificationDao()
         val createNotificationDao = CreateNotificationDao(notificationDao)
+        val notificationListDao = NotificationListDao(notificationDao)
+        val notificationDetailDao = NotificationDetailDao(notificationDao)
 
         createNotificationRepository = CreateNotificationRepositoryImpl(createNotificationDao)
+        notificationListRepository = NotificationListRepositoryImpl(notificationListDao)
+        notificationDetailRepository = NotificationDetailRepositoryImpl(notificationDetailDao)
     }
 }
