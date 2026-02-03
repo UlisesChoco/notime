@@ -20,4 +20,7 @@ interface NotificationDao {
 
     @Query("SELECT * FROM notification")
     fun getAll(): List<Notification>
+
+    @Query("SELECT * FROM notification WHERE id = :id")
+    fun getById(id: Int): Notification
 }
