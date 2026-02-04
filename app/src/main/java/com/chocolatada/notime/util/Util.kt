@@ -13,6 +13,10 @@ import androidx.core.content.ContextCompat.getSystemService
 
 const val channelId = "1"
 
+enum class HttpErrorEnum(val code: Int) {
+    Unauthorized(401)
+}
+
 fun createNotificationChannel(ctx: Context) {
     val name = "NotiMe Notifications"
     val descriptionText = "NotiMe Notifications"
