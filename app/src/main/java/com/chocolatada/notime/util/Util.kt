@@ -10,12 +10,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat.getSystemService
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import com.chocolatada.notime.worker.NotificationWorker
 
 const val channelId = "1"
-
-enum class HttpErrorEnum(val code: Int) {
-    Unauthorized(401)
-}
 
 fun createNotificationChannel(ctx: Context) {
     val name = "NotiMe Notifications"
@@ -53,4 +53,13 @@ fun sendNotification(ctx: Context, icon: Int, title: String, content: String, no
             .from(ctx)
             .notify(notificationId, builder.build())
     }
+}
+
+fun launchWorker(ctx: Context) {
+    val myWorkerRequest = OneTimeWorkRequestBuilder<NotificationWorker>().build()
+    WorkManager.getInstance(ctx).enqueueUniqueWork(
+        "notification-worker",
+        ExistingWorkPolicy.REPLACE,
+        myWorkerRequest
+    )
 }
